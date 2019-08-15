@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configInfo>
+   <ip>192.168.2.234</ip>
+   <port>3306</port>
+   <database>cts</database>
+   <userName>dm_cts</userName>
+   <passWord>cts@sit</passWord>
+   <basePackage>com.smy.cts</basePackage>
+   <tableConfigs>
+       <!--<tableConfig>
+         <tableName>LMT_PROD_ACCOUNT_INFO</tableName>
+         <builderObjectName>LmtProdAccountInfo</builderObjectName>
+         <passColumnNames>null</passColumnNames>
+         <tablePK>PROD_ACCOUNT_NO</tablePK>
+      </tableConfig>
+       <tableConfig>
+         <tableName>SYS_PROD_ATTR_PARAM</tableName>
+         <builderObjectName>SysProdAttrParam</builderObjectName>
+         <passColumnNames>null</passColumnNames>
+         <tablePK>ID</tablePK>
+      </tableConfig>-->
+	  
+       <tableConfig>
+         <tableName>ACT_REPAY_BENIFIT_QUALIFICATION</tableName>
+         <builderObjectName>ActRepayBenifitQualification</builderObjectName>
+         <passColumnNames>null</passColumnNames>
+         <tablePK>null</tablePK>
+      </tableConfig>
+       <tableConfig>
+         <tableName>ACT_REPAY_BENIFIT_ORDER_DETAIL</tableName>
+         <builderObjectName>ActRepayBenifitOrderDetail</builderObjectName>
+         <passColumnNames>null</passColumnNames>
+         <tablePK>ID</tablePK>
+      </tableConfig>
+	  
+   </tableConfigs>
+   <fileConfigs>
+     <fileConfig>
+         <buildPackage>com.smy.cts.inner</buildPackage>
+         <buildTemplatePosition>config/innerService.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>${className}InnerService</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>com.smy.cts.inner.impl</buildPackage>
+         <buildTemplatePosition>config/innerServiceImpl.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>${className}InnerServiceImpl</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>com.smy.cts.dao</buildPackage>
+         <buildTemplatePosition>config/dao.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>Dao</buildFileName>
+      </fileConfig>
+	  <!-- <fileConfig>
+         <buildPackage>com.smy.cts.domain</buildPackage>
+         <buildTemplatePosition>config/domain.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName></buildFileName>
+      </fileConfig>-->
+   </fileConfigs>
+</configInfo>
+

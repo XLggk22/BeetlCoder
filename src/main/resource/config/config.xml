@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configInfo>
+   <ip>192.168.2.234</ip>
+   <port>3306</port>
+   <database>pcs</database>
+   <userName>dm_pcs</userName>
+   <passWord>pcs@sit</passWord>
+   <basePackage>com.smy.pcs</basePackage>
+   <tableConfigs>
+   	  <!-- 可以配置多个tableConfig，例如下 --> 
+<!--       <tableConfig> -->
+<!--       	 表名 -->
+<!--          <tableName>SYS_PROD_ATTR_PARAM</tableName> -->
+<!--          生成的实体类名 -->
+<!--          <builderObjectName>SysProdAttrParam</builderObjectName> -->
+<!--          忽略的列名 -->
+<!--          <passColumnNames>null</passColumnNames> -->
+<!--          主键 -->
+<!--          <tablePK>ID</tablePK> -->
+<!--       </tableConfig> -->
+	  
+
+	  <tableConfig>
+         <tableName>trx_realtime_trans_info</tableName>
+         <builderObjectName>TrxRealtimeTransInfo</builderObjectName>
+         <passColumnNames>null</passColumnNames>
+         <tablePK>ID</tablePK>
+     </tableConfig>
+   </tableConfigs>
+   
+   <fileConfigs>
+   	 <!-- 可以配置多个fileConfig，例如下 -->
+<!--    	 <fileConfig> -->
+<!--    	 	 包名 -->
+<!--          <buildPackage>com.smy.pcs.service</buildPackage> -->
+<!--          使用的模板 -->
+<!--          <buildTemplatePosition>config/Service.template</buildTemplatePosition> -->
+<!--          生成的文件的后缀 -->
+<!--          <buildSuffixName>.java</buildSuffixName> -->
+<!--          生成的文件名 -->
+<!--          <buildFileName>${className}Service</buildFileName> -->
+<!--      </fileConfig> -->
+	<fileConfig>
+         <buildPackage>com.smy.pcs.oms.controller</buildPackage>
+         <buildTemplatePosition>config/controller.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>${className}Controller</buildFileName>
+     </fileConfig>
+     <fileConfig>
+         <buildPackage>com.smy.pcs.service</buildPackage>
+         <buildTemplatePosition>config/Service.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>${className}Service</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>com.smy.pcs.service.impl</buildPackage>
+         <buildTemplatePosition>config/ServiceImpl.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>${className}ServiceImpl</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>com.smy.pcs.dao</buildPackage>
+         <buildTemplatePosition>config/dao.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>Dao</buildFileName>
+      </fileConfig>
+	  <fileConfig>
+         <buildPackage>com.smy.pcs.domain</buildPackage>
+         <buildTemplatePosition>config/domain.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName></buildFileName>
+      </fileConfig>
+	  <fileConfig>
+         <buildPackage>com.smy.pcs.domain</buildPackage>
+         <buildTemplatePosition>config/criteria.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>${className}Criteria</buildFileName>
+      </fileConfig>
+	  <fileConfig>
+         <buildPackage>com.smy.pcs.mapper</buildPackage>
+         <buildTemplatePosition>config/mapper.template</buildTemplatePosition>
+         <buildSuffixName>.xml</buildSuffixName>
+         <buildFileName>${className}Mapper</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>${classNameLowerCase}</buildPackage>
+         <buildTemplatePosition>config/page_List.template</buildTemplatePosition>
+         <buildSuffixName>.jsp</buildSuffixName>
+         <buildFileName>List</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>${classNameLowerCase}</buildPackage>
+         <buildTemplatePosition>config/page_add.template</buildTemplatePosition>
+         <buildSuffixName>.jsp</buildSuffixName>
+         <buildFileName>Add</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>${classNameLowerCase}</buildPackage>
+         <buildTemplatePosition>config/page_edit.template</buildTemplatePosition>
+         <buildSuffixName>.jsp</buildSuffixName>
+         <buildFileName>Edit</buildFileName>
+      </fileConfig>
+   </fileConfigs>
+</configInfo>
+

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smy.pcs.dao.${className}Dao" >
+  <resultMap id="BaseResultMap" type="com.smy.pcs.domain.${className}" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+   <% for(colunm in colunmList){ %>
+   <result column="${colunm.columnName}" property="${colunm.columnNameCamel}" jdbcType="${colunm.dataType}" />
+   <% } %>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and \${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and \${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and \${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and \${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and \${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and \${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and \${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and \${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+   ${allColunm}
+  </sql>
+  <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.smy.pcs.domain.${className}Criteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ${tableName}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by \${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+      limit \${limitStart},\${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ${tableName}
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ${tableName}
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByCriteria" parameterType="com.smy.pcs.domain.${className}Criteria" >
+    delete from ${tableName}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smy.pcs.domain.${className}" >
+    insert into ${tableName} (${allColunm})
+    values (
+	<% for(colunm in colunmList){ %>
+       #{${colunm.columnNameCamel},jdbcType=${colunm.dataType}},
+	<% } %>
+	)
+  </insert>
+  <insert id="insertSelective" parameterType="com.smy.pcs.domain.${className}" >
+    insert into ${tableName}
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+    <% for(colunm in colunmList){ %>
+	  <if test="${colunm.columnNameCamel} != null" >
+        ${colunm.columnName},
+      </if>
+	<% } %>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	<% for(colunm in colunmList){ %>
+	  <if test="${colunm.columnNameCamel} != null" >
+       #{${colunm.columnNameCamel},jdbcType=${colunm.dataType}},
+      </if>
+	<% } %>
+    </trim>
+  </insert>
+  <select id="countByCriteria" parameterType="com.smy.pcs.domain.${className}Criteria" resultType="java.lang.Integer" >
+    select count(1) from ${tableName}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriteriaSelective" parameterType="map" >
+    update ${tableName}
+    <set >
+	  <% for(colunm in colunmList){ %>
+	  <if test="record.${colunm.columnNameCamel} != null" >
+       #{record.${colunm.columnNameCamel},jdbcType=${colunm.dataType}},
+      </if>
+	<% } %>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCriteria" parameterType="map" >
+    update ${tableName}
+    set 
+	  <% for(colunm in colunmList){ %>
+       ${colunm.columnName} = #{${colunm.columnNameCamel},jdbcType=${colunm.dataType}},
+	<% } %>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smy.pcs.domain.${className}" >
+    update ${tableName}
+    <set >
+	<% for(colunm in colunmList){ %>
+	  <if test="${colunm.columnNameCamel} != null" >
+       ${colunm.columnName} = #{${colunm.columnNameCamel},jdbcType=${colunm.dataType}},
+      </if>
+	<% } %>
+    </set>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smy.pcs.domain.${className}" >
+    update ${tableName}
+    set 
+	<% for(colunm in colunmList){ %>
+       ${colunm.columnName} = #{${colunm.columnNameCamel},jdbcType=${colunm.dataType}},
+	<% } %>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

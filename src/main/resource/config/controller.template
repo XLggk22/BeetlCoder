@@ -1,0 +1,154 @@
+package ${package};
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.smy.framework.base.IPage;
+import com.smy.framework.core.exception.ServiceException;
+import com.smy.pcs.domain.${className};
+import com.smy.pcs.oms.common.JsonPage;
+import com.smy.pcs.oms.common.SuperWebController;
+import com.smy.pcs.service.${className}Service;
+
+/**
+ * 
+ * @author 
+ *
+ */
+@Controller
+@RequestMapping("/${classNameLowerCase}/")
+public class ${className}Controller extends SuperWebController{
+	
+	@Autowired
+	private ${className}Service ${classNameLowerCase}Service;
+
+	
+	/**
+	 * 列表界面
+	 * @return
+	 */
+	@RequestMapping("list")
+	public String list(){
+		return "${classNameLowerCase}/${classNameLowerCase}List";
+	}
+	
+	/**
+	 * 添加界面
+	 * @return
+	 */
+	@RequestMapping("add")
+	public String add(){
+		return "${classNameLowerCase}/${classNameLowerCase}Add";
+	}
+	
+	/**
+	 * 修改界面
+	 * @param ${classNameLowerCase}
+	 * @return
+	 */
+	@RequestMapping("edit")
+	public ModelAndView edit(${className} ${classNameLowerCase}){
+		ModelAndView model = new ModelAndView();
+		try{
+			//根据主键获取实时交易对象
+			${className} info = ${classNameLowerCase}Service.findById(${classNameLowerCase}.getId());
+			model.addObject("info", info);
+		} catch (Exception e) {
+			model.addObject("message", e.getMessage());
+		}
+		model.setViewName("${classNameLowerCase}/${classNameLowerCase}Edit");
+		return model;
+	}
+
+	/**
+	 * 分页查询
+	 * @param ${classNameLowerCase}
+	 * @return
+	 */
+	@RequestMapping("queryList")
+	@ResponseBody
+	public Object queryList(${className} ${classNameLowerCase}){
+	    //打印日志
+		formatLog(formatObj(${classNameLowerCase}));
+		//页码
+		String pageNo = request.getParameter("page");
+		if(StringUtils.isBlank(pageNo)){
+			pageNo = "1";
+		}
+		//每页条数
+		String pageSize=request.getParameter("rows");
+		if(StringUtils.isBlank(pageSize)){
+			pageSize = "20";
+		}
+		IPage<${className}> page = ${classNameLowerCase}Service.findPageList(${classNameLowerCase}, Integer.valueOf(pageNo), Integer.valueOf(pageSize));
+		JsonPage<${className}> jsonPage=new JsonPage<${className}>();
+		jsonPage.setTotal(page.getTotalRecordCount());
+		jsonPage.setRows(page.getData());
+		return jsonPage;
+	}
+
+	/**
+	 * 新增、更新数据
+	 * @param ${classNameLowerCase}
+	 * @return
+	 */
+	@RequestMapping(value="save", method = RequestMethod.POST)
+	@ResponseBody
+	public Object save(${className} ${classNameLowerCase}){
+	    //打印日志
+		formatLog(formatObj(${classNameLowerCase}));
+		try {
+		    Object opFaild = opFaild("存在同一个发卡机构，同一卡片类型，同一验卡机构、同一优先级的记录!");
+		    
+            if(StringUtils.isBlank(${classNameLowerCase}.getId())){
+			    //新增记录
+				${classNameLowerCase}.setId(Strings.getUUID());
+				${classNameLowerCase}Service.create(${classNameLowerCase});
+			}else{
+			    //修改记录
+				${classNameLowerCase}Service.updateById(${classNameLowerCase});
+			}
+			return opSuccess();
+		}
+		catch(ServiceException e){
+			return opFaild(e.getMessage());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return opSuccess();
+		}
+	}
+
+	/**
+	 * 删除操作
+	 * @param ${classNameLowerCase}
+	 * @return
+	 */
+	@RequestMapping("deleteAc")
+	@ResponseBody
+	public Object deleteAc(${className} ${classNameLowerCase}){
+	    //打印日志
+		formatLog(formatObj(${classNameLowerCase}));
+		try {
+			${classNameLowerCase}Service.deleteById(${classNameLowerCase}.getId());
+			return opSuccess();
+		}
+		catch(ServiceException e){
+			return opFaild(e.getMessage());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return opFaild();
+		}
+	}
+}

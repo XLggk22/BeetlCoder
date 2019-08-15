@@ -1,0 +1,93 @@
+\<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+\<%
+	String path = request.getContextPath();
+	String basePath = path+"/";
+	HttpSession httpSession = request.getSession();
+	String userId = (String)httpSession.getAttribute("userId");
+%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <base href="\<%=basePath%>">
+    <title>萨摩耶运营管理平台</title>
+
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+
+	<link rel="stylesheet" type="text/css" href="\<%=basePath %>static/jquery-easyui-1.4.3/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="\<%=basePath %>static/jquery-easyui-1.4.3/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="\<%=basePath %>static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="\<%=basePath %>static/css/button.css">
+	<script type="text/javascript" src="\<%=basePath %>static/jquery-easyui-1.4.3/jquery.min.js"></script>
+	<script type="text/javascript" src="\<%=basePath %>static/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="\<%=basePath %>static/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="\<%=basePath %>static/jquery-easyui-1.4.3/datagrid-bufferview.js"></script>
+	<script type="text/javascript" src="\<%=basePath %>static/artDialog/jquery.artDialog.js?skin=aero"></script>
+	<style>
+		td{
+			padding:10px 10px;
+		}
+		.input{
+	    	width:155px;
+	    }
+	    .title{
+	    	text-align: right;
+	    }
+	</style>
+  </head>
+
+  <body>
+  	<div>
+	  	<form id="edit_queryParameters" class="easyui-form" method="post" data-options="novalidate:true">
+		  	<table style="line-height: 40px;margin: 20px;" >
+		  		<tr>
+		  			<% for(column in colunmList){ %>
+		  			<td class="title">${column.columnDesc}:</td>
+		  			<td class="input">
+		  				<input id="edit_${column.columnNameCamel}" name="${column.columnNameCamel}" value="\${${column.columnNameCamel}}" class="easyui-textbox" required="true">
+		  			</td>
+		  			<% } %>
+		  		</tr>
+		  		
+		  		<tr>
+		  			<td colspan="6" align="center"><input type="button"  style="margin-top: 10px;" class="btn-save" onclick="editSave()" value="保存"/></td>
+		  		</tr>
+		  	</table>
+	  	</form>
+  </div>
+  </body>
+  <script type="text/javascript">
+	function editSave(){
+
+		if($("#edit_").combobox('getValue')==""){
+			$.messager.alert('提示','');
+			return;
+		}
+		
+		$.ajax({
+			url:'\<%=basePath %>${classNameLowerCase}/save',
+			type:'POST',
+			dataType:"json",
+			data:{
+				<% for(column in colunmList){ %>
+					"${column.columnNameCamel}" : $("#edit_${column.columnNameCamel}").combobox('getValue'),
+				<% } %>
+			},
+			success:function(data){
+		 		if (data!=null&&data.code=="200"){
+		 			$('#editDlg').dialog('close');
+					$.messager.alert("","操作成功");
+					$("#dataList").datagrid("reload");
+				}else{
+					$.messager.alert('error',data.message);
+				}
+	
+			}
+		});
+	
+	}
+  </script>
+</html>

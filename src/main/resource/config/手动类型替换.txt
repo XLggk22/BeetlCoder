@@ -1,0 +1,4 @@
+varchar	VARCHAR
+int 	INTEGER
+datetime DATE
+timestamp TIMESTAMP

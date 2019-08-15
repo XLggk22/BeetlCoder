@@ -1,0 +1,46 @@
+package ${package};
+
+
+import java.util.List;
+import java.util.Map;
+import com.smy.framework.base.IPage;
+
+import ${basePackage}.domain.${className};
+
+/**
+ * ${colunmList[0].tableDesc} Service
+ * @author zhangguguang
+ * @Date 20170220
+ */
+public interface ${custFileName} {
+	/** 增加 **/
+	public String create(${className} ${classNameLowerCase});
+
+	/** 修改 **/
+	public void updateById(${className} ${classNameLowerCase});
+
+	/** 删除 **/
+	public void deleteById(String id);
+
+	/** 查询翻页数据 **/
+	public IPage<${className}> findPageList(${className} ${classNameLowerCase}, int pageNo, int pageSize);
+
+	/** 查询记录总数 **/
+	public Integer findTotalNum(${className} ${classNameLowerCase});
+
+	/** 根据id获取 **/
+	public ${className} findById(String id);
+
+	/** 根据条件获取List **/
+	public List<${className}> findListByMap(Map<String, Object> ${classNameLowerCase}Map);
+
+	/** 根据条件获取List **/
+	public List<${className}> findListByExample(${className} ${classNameLowerCase});
+
+	/** 根据条件获取Object**/
+	public ${className} findOneByMap(Map<String, Object> ${classNameLowerCase}Map);
+
+	/** 根据条件获取Object**/
+	public ${className} findOneByExample(${className} ${classNameLowerCase});
+	
+}

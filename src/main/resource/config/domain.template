@@ -1,0 +1,40 @@
+package ${package};
+
+import com.smy.framework.base.BaseEntity;
+import java.io.Serializable;
+import java.util.Date;
+/**
+ * ${colunmList[0].tableDesc} 
+ * @author guoyunfeng
+ *
+ */
+public class ${className} extends BaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+	
+    <% for(colunm in colunmList){ %>
+	/**
+	 * colunmDesc:${colunm.columnDesc} 
+	 */
+	private ${colunm.columnClassName} ${colunm.columnNameCamel};
+	<% } %>
+
+    <% for(colunm in colunmList){ %>
+	
+	/**
+	 * 获取${colunm.columnDesc}
+	 * @param ${colunm.columnNameCamel} ${colunm.columnDesc}
+	 */
+	public void set${colunm.columnNameCamelFirstUpper}(${colunm.columnClassName} ${colunm.columnNameCamel}){
+		this.${colunm.columnNameCamel} = ${colunm.columnNameCamel};
+	}
+	/**
+	 * 获取${colunm.columnDesc}
+	 * @return ${colunm.columnDesc}
+	 */
+	public ${colunm.columnClassName} get${colunm.columnNameCamelFirstUpper}() {
+		return ${colunm.columnNameCamel};
+	}
+	
+	<% } %>
+}

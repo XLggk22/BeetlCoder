@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smy.pcs.dao.TrxRealtimeTransInfoDao" >
+  <resultMap id="BaseResultMap" type="com.smy.pcs.domain.TrxRealtimeTransInfo" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+   <result column="TRANS_SEQNO" property="transSeqno" jdbcType="char" />
+   <result column="ORG_TRANS_SEQNO" property="orgTransSeqno" jdbcType="varchar" />
+   <result column="CUST_NO" property="custNo" jdbcType="char" />
+   <result column="BANK_CARD_NO" property="bankCardNo" jdbcType="varchar" />
+   <result column="BANK_CARD_TYPE" property="bankCardType" jdbcType="char" />
+   <result column="CURRENCY" property="currency" jdbcType="char" />
+   <result column="TRANS_AMT" property="transAmt" jdbcType="decimal" />
+   <result column="TRANS_TYPE" property="transType" jdbcType="char" />
+   <result column="TRANS_FROM" property="transFrom" jdbcType="char" />
+   <result column="TRANS_DESC" property="transDesc" jdbcType="varchar" />
+   <result column="REMARK" property="remark" jdbcType="varchar" />
+   <result column="VALID_CODE" property="validCode" jdbcType="varchar" />
+   <result column="STORABLE_PAN" property="storablePan" jdbcType="varchar" />
+   <result column="TRANS_DATE" property="transDate" jdbcType="int" />
+   <result column="TRANS_TIME" property="transTime" jdbcType="char" />
+   <result column="SETTLE_DATE" property="settleDate" jdbcType="int" />
+   <result column="STATUS" property="status" jdbcType="char" />
+   <result column="THIRD_TRANS_STATUS" property="thirdTransStatus" jdbcType="varchar" />
+   <result column="RETURN_CODE" property="returnCode" jdbcType="varchar" />
+   <result column="RETURN_MSG" property="returnMsg" jdbcType="varchar" />
+   <result column="BAL_STATUS" property="balStatus" jdbcType="char" />
+   <result column="BAL_RESULT" property="balResult" jdbcType="char" />
+   <result column="TASK_ID" property="taskId" jdbcType="char" />
+   <result column="CUST_NAME" property="custName" jdbcType="varchar" />
+   <result column="ID_TYPE" property="idType" jdbcType="char" />
+   <result column="ID_NO" property="idNo" jdbcType="varchar" />
+   <result column="MOBILE_NO" property="mobileNo" jdbcType="varchar" />
+   <result column="REALTIME_THIRD_PARTY_CODE" property="realtimeThirdPartyCode" jdbcType="char" />
+   <result column="OPEN_BANK_NAME" property="openBankName" jdbcType="varchar" />
+   <result column="BANK_CODE" property="bankCode" jdbcType="varchar" />
+   <result column="OPEN_BANK_PROV" property="openBankProv" jdbcType="varchar" />
+   <result column="BIZ_TYPE" property="bizType" jdbcType="char" />
+   <result column="BIZ_OBJ_TYPE" property="bizObjType" jdbcType="char" />
+   <result column="TOKEN" property="token" jdbcType="varchar" />
+   <result column="BUSS_TRANS_DATE" property="bussTransDate" jdbcType="int" />
+   <result column="BUSS_TRANS_SEQNO" property="bussTransSeqno" jdbcType="char" />
+   <result column="BAT_DETAIL_ID" property="batDetailId" jdbcType="char" />
+   <result column="BAT_ID" property="batId" jdbcType="char" />
+   <result column="NOTIFY_CTS_FLAG" property="notifyCtsFlag" jdbcType="char" />
+   <result column="QUERY_COUNT" property="queryCount" jdbcType="int" />
+   <result column="VERSION" property="version" jdbcType="int" />
+   <result column="CREATE_DATETIME" property="createDatetime" jdbcType="timestamp" />
+   <result column="UPDATE_DATETIME" property="updateDatetime" jdbcType="timestamp" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+   TRANS_SEQNO, ORG_TRANS_SEQNO, CUST_NO, BANK_CARD_NO, BANK_CARD_TYPE, CURRENCY, TRANS_AMT, TRANS_TYPE, TRANS_FROM, TRANS_DESC, REMARK, VALID_CODE, STORABLE_PAN, TRANS_DATE, TRANS_TIME, SETTLE_DATE, STATUS, THIRD_TRANS_STATUS, RETURN_CODE, RETURN_MSG, BAL_STATUS, BAL_RESULT, TASK_ID, CUST_NAME, ID_TYPE, ID_NO, MOBILE_NO, REALTIME_THIRD_PARTY_CODE, OPEN_BANK_NAME, BANK_CODE, OPEN_BANK_PROV, BIZ_TYPE, BIZ_OBJ_TYPE, TOKEN, BUSS_TRANS_DATE, BUSS_TRANS_SEQNO, BAT_DETAIL_ID, BAT_ID, NOTIFY_CTS_FLAG, QUERY_COUNT, VERSION, CREATE_DATETIME, UPDATE_DATETIME
+  </sql>
+  <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.smy.pcs.domain.TrxRealtimeTransInfoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from trx_realtime_trans_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+      limit ${limitStart},${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from trx_realtime_trans_info
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from trx_realtime_trans_info
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByCriteria" parameterType="com.smy.pcs.domain.TrxRealtimeTransInfoCriteria" >
+    delete from trx_realtime_trans_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.smy.pcs.domain.TrxRealtimeTransInfo" >
+    insert into trx_realtime_trans_info (TRANS_SEQNO, ORG_TRANS_SEQNO, CUST_NO, BANK_CARD_NO, BANK_CARD_TYPE, CURRENCY, TRANS_AMT, TRANS_TYPE, TRANS_FROM, TRANS_DESC, REMARK, VALID_CODE, STORABLE_PAN, TRANS_DATE, TRANS_TIME, SETTLE_DATE, STATUS, THIRD_TRANS_STATUS, RETURN_CODE, RETURN_MSG, BAL_STATUS, BAL_RESULT, TASK_ID, CUST_NAME, ID_TYPE, ID_NO, MOBILE_NO, REALTIME_THIRD_PARTY_CODE, OPEN_BANK_NAME, BANK_CODE, OPEN_BANK_PROV, BIZ_TYPE, BIZ_OBJ_TYPE, TOKEN, BUSS_TRANS_DATE, BUSS_TRANS_SEQNO, BAT_DETAIL_ID, BAT_ID, NOTIFY_CTS_FLAG, QUERY_COUNT, VERSION, CREATE_DATETIME, UPDATE_DATETIME)
+    values (
+       #{transSeqno,jdbcType=char},
+       #{orgTransSeqno,jdbcType=varchar},
+       #{custNo,jdbcType=char},
+       #{bankCardNo,jdbcType=varchar},
+       #{bankCardType,jdbcType=char},
+       #{currency,jdbcType=char},
+       #{transAmt,jdbcType=decimal},
+       #{transType,jdbcType=char},
+       #{transFrom,jdbcType=char},
+       #{transDesc,jdbcType=varchar},
+       #{remark,jdbcType=varchar},
+       #{validCode,jdbcType=varchar},
+       #{storablePan,jdbcType=varchar},
+       #{transDate,jdbcType=int},
+       #{transTime,jdbcType=char},
+       #{settleDate,jdbcType=int},
+       #{status,jdbcType=char},
+       #{thirdTransStatus,jdbcType=varchar},
+       #{returnCode,jdbcType=varchar},
+       #{returnMsg,jdbcType=varchar},
+       #{balStatus,jdbcType=char},
+       #{balResult,jdbcType=char},
+       #{taskId,jdbcType=char},
+       #{custName,jdbcType=varchar},
+       #{idType,jdbcType=char},
+       #{idNo,jdbcType=varchar},
+       #{mobileNo,jdbcType=varchar},
+       #{realtimeThirdPartyCode,jdbcType=char},
+       #{openBankName,jdbcType=varchar},
+       #{bankCode,jdbcType=varchar},
+       #{openBankProv,jdbcType=varchar},
+       #{bizType,jdbcType=char},
+       #{bizObjType,jdbcType=char},
+       #{token,jdbcType=varchar},
+       #{bussTransDate,jdbcType=int},
+       #{bussTransSeqno,jdbcType=char},
+       #{batDetailId,jdbcType=char},
+       #{batId,jdbcType=char},
+       #{notifyCtsFlag,jdbcType=char},
+       #{queryCount,jdbcType=int},
+       #{version,jdbcType=int},
+       #{createDatetime,jdbcType=timestamp},
+       #{updateDatetime,jdbcType=timestamp},
+	)
+  </insert>
+  <insert id="insertSelective" parameterType="com.smy.pcs.domain.TrxRealtimeTransInfo" >
+    insert into trx_realtime_trans_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+	  <if test="transSeqno != null" >
+        TRANS_SEQNO,
+      </if>
+	  <if test="orgTransSeqno != null" >
+        ORG_TRANS_SEQNO,
+      </if>
+	  <if test="custNo != null" >
+        CUST_NO,
+      </if>
+	  <if test="bankCardNo != null" >
+        BANK_CARD_NO,
+      </if>
+	  <if test="bankCardType != null" >
+        BANK_CARD_TYPE,
+      </if>
+	  <if test="currency != null" >
+        CURRENCY,
+      </if>
+	  <if test="transAmt != null" >
+        TRANS_AMT,
+      </if>
+	  <if test="transType != null" >
+        TRANS_TYPE,
+      </if>
+	  <if test="transFrom != null" >
+        TRANS_FROM,
+      </if>
+	  <if test="transDesc != null" >
+        TRANS_DESC,
+      </if>
+	  <if test="remark != null" >
+        REMARK,
+      </if>
+	  <if test="validCode != null" >
+        VALID_CODE,
+      </if>
+	  <if test="storablePan != null" >
+        STORABLE_PAN,
+      </if>
+	  <if test="transDate != null" >
+        TRANS_DATE,
+      </if>
+	  <if test="transTime != null" >
+        TRANS_TIME,
+      </if>
+	  <if test="settleDate != null" >
+        SETTLE_DATE,
+      </if>
+	  <if test="status != null" >
+        STATUS,
+      </if>
+	  <if test="thirdTransStatus != null" >
+        THIRD_TRANS_STATUS,
+      </if>
+	  <if test="returnCode != null" >
+        RETURN_CODE,
+      </if>
+	  <if test="returnMsg != null" >
+        RETURN_MSG,
+      </if>
+	  <if test="balStatus != null" >
+        BAL_STATUS,
+      </if>
+	  <if test="balResult != null" >
+        BAL_RESULT,
+      </if>
+	  <if test="taskId != null" >
+        TASK_ID,
+      </if>
+	  <if test="custName != null" >
+        CUST_NAME,
+      </if>
+	  <if test="idType != null" >
+        ID_TYPE,
+      </if>
+	  <if test="idNo != null" >
+        ID_NO,
+      </if>
+	  <if test="mobileNo != null" >
+        MOBILE_NO,
+      </if>
+	  <if test="realtimeThirdPartyCode != null" >
+        REALTIME_THIRD_PARTY_CODE,
+      </if>
+	  <if test="openBankName != null" >
+        OPEN_BANK_NAME,
+      </if>
+	  <if test="bankCode != null" >
+        BANK_CODE,
+      </if>
+	  <if test="openBankProv != null" >
+        OPEN_BANK_PROV,
+      </if>
+	  <if test="bizType != null" >
+        BIZ_TYPE,
+      </if>
+	  <if test="bizObjType != null" >
+        BIZ_OBJ_TYPE,
+      </if>
+	  <if test="token != null" >
+        TOKEN,
+      </if>
+	  <if test="bussTransDate != null" >
+        BUSS_TRANS_DATE,
+      </if>
+	  <if test="bussTransSeqno != null" >
+        BUSS_TRANS_SEQNO,
+      </if>
+	  <if test="batDetailId != null" >
+        BAT_DETAIL_ID,
+      </if>
+	  <if test="batId != null" >
+        BAT_ID,
+      </if>
+	  <if test="notifyCtsFlag != null" >
+        NOTIFY_CTS_FLAG,
+      </if>
+	  <if test="queryCount != null" >
+        QUERY_COUNT,
+      </if>
+	  <if test="version != null" >
+        VERSION,
+      </if>
+	  <if test="createDatetime != null" >
+        CREATE_DATETIME,
+      </if>
+	  <if test="updateDatetime != null" >
+        UPDATE_DATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	  <if test="transSeqno != null" >
+       #{transSeqno,jdbcType=char},
+      </if>
+	  <if test="orgTransSeqno != null" >
+       #{orgTransSeqno,jdbcType=varchar},
+      </if>
+	  <if test="custNo != null" >
+       #{custNo,jdbcType=char},
+      </if>
+	  <if test="bankCardNo != null" >
+       #{bankCardNo,jdbcType=varchar},
+      </if>
+	  <if test="bankCardType != null" >
+       #{bankCardType,jdbcType=char},
+      </if>
+	  <if test="currency != null" >
+       #{currency,jdbcType=char},
+      </if>
+	  <if test="transAmt != null" >
+       #{transAmt,jdbcType=decimal},
+      </if>
+	  <if test="transType != null" >
+       #{transType,jdbcType=char},
+      </if>
+	  <if test="transFrom != null" >
+       #{transFrom,jdbcType=char},
+      </if>
+	  <if test="transDesc != null" >
+       #{transDesc,jdbcType=varchar},
+      </if>
+	  <if test="remark != null" >
+       #{remark,jdbcType=varchar},
+      </if>
+	  <if test="validCode != null" >
+       #{validCode,jdbcType=varchar},
+      </if>
+	  <if test="storablePan != null" >
+       #{storablePan,jdbcType=varchar},
+      </if>
+	  <if test="transDate != null" >
+       #{transDate,jdbcType=int},
+      </if>
+	  <if test="transTime != null" >
+       #{transTime,jdbcType=char},
+      </if>
+	  <if test="settleDate != null" >
+       #{settleDate,jdbcType=int},
+      </if>
+	  <if test="status != null" >
+       #{status,jdbcType=char},
+      </if>
+	  <if test="thirdTransStatus != null" >
+       #{thirdTransStatus,jdbcType=varchar},
+      </if>
+	  <if test="returnCode != null" >
+       #{returnCode,jdbcType=varchar},
+      </if>
+	  <if test="returnMsg != null" >
+       #{returnMsg,jdbcType=varchar},
+      </if>
+	  <if test="balStatus != null" >
+       #{balStatus,jdbcType=char},
+      </if>
+	  <if test="balResult != null" >
+       #{balResult,jdbcType=char},
+      </if>
+	  <if test="taskId != null" >
+       #{taskId,jdbcType=char},
+      </if>
+	  <if test="custName != null" >
+       #{custName,jdbcType=varchar},
+      </if>
+	  <if test="idType != null" >
+       #{idType,jdbcType=char},
+      </if>
+	  <if test="idNo != null" >
+       #{idNo,jdbcType=varchar},
+      </if>
+	  <if test="mobileNo != null" >
+       #{mobileNo,jdbcType=varchar},
+      </if>
+	  <if test="realtimeThirdPartyCode != null" >
+       #{realtimeThirdPartyCode,jdbcType=char},
+      </if>
+	  <if test="openBankName != null" >
+       #{openBankName,jdbcType=varchar},
+      </if>
+	  <if test="bankCode != null" >
+       #{bankCode,jdbcType=varchar},
+      </if>
+	  <if test="openBankProv != null" >
+       #{openBankProv,jdbcType=varchar},
+      </if>
+	  <if test="bizType != null" >
+       #{bizType,jdbcType=char},
+      </if>
+	  <if test="bizObjType != null" >
+       #{bizObjType,jdbcType=char},
+      </if>
+	  <if test="token != null" >
+       #{token,jdbcType=varchar},
+      </if>
+	  <if test="bussTransDate != null" >
+       #{bussTransDate,jdbcType=int},
+      </if>
+	  <if test="bussTransSeqno != null" >
+       #{bussTransSeqno,jdbcType=char},
+      </if>
+	  <if test="batDetailId != null" >
+       #{batDetailId,jdbcType=char},
+      </if>
+	  <if test="batId != null" >
+       #{batId,jdbcType=char},
+      </if>
+	  <if test="notifyCtsFlag != null" >
+       #{notifyCtsFlag,jdbcType=char},
+      </if>
+	  <if test="queryCount != null" >
+       #{queryCount,jdbcType=int},
+      </if>
+	  <if test="version != null" >
+       #{version,jdbcType=int},
+      </if>
+	  <if test="createDatetime != null" >
+       #{createDatetime,jdbcType=timestamp},
+      </if>
+	  <if test="updateDatetime != null" >
+       #{updateDatetime,jdbcType=timestamp},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCriteria" parameterType="com.smy.pcs.domain.TrxRealtimeTransInfoCriteria" resultType="java.lang.Integer" >
+    select count(1) from trx_realtime_trans_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriteriaSelective" parameterType="map" >
+    update trx_realtime_trans_info
+    <set >
+	  <if test="record.transSeqno != null" >
+       #{record.transSeqno,jdbcType=char},
+      </if>
+	  <if test="record.orgTransSeqno != null" >
+       #{record.orgTransSeqno,jdbcType=varchar},
+      </if>
+	  <if test="record.custNo != null" >
+       #{record.custNo,jdbcType=char},
+      </if>
+	  <if test="record.bankCardNo != null" >
+       #{record.bankCardNo,jdbcType=varchar},
+      </if>
+	  <if test="record.bankCardType != null" >
+       #{record.bankCardType,jdbcType=char},
+      </if>
+	  <if test="record.currency != null" >
+       #{record.currency,jdbcType=char},
+      </if>
+	  <if test="record.transAmt != null" >
+       #{record.transAmt,jdbcType=decimal},
+      </if>
+	  <if test="record.transType != null" >
+       #{record.transType,jdbcType=char},
+      </if>
+	  <if test="record.transFrom != null" >
+       #{record.transFrom,jdbcType=char},
+      </if>
+	  <if test="record.transDesc != null" >
+       #{record.transDesc,jdbcType=varchar},
+      </if>
+	  <if test="record.remark != null" >
+       #{record.remark,jdbcType=varchar},
+      </if>
+	  <if test="record.validCode != null" >
+       #{record.validCode,jdbcType=varchar},
+      </if>
+	  <if test="record.storablePan != null" >
+       #{record.storablePan,jdbcType=varchar},
+      </if>
+	  <if test="record.transDate != null" >
+       #{record.transDate,jdbcType=int},
+      </if>
+	  <if test="record.transTime != null" >
+       #{record.transTime,jdbcType=char},
+      </if>
+	  <if test="record.settleDate != null" >
+       #{record.settleDate,jdbcType=int},
+      </if>
+	  <if test="record.status != null" >
+       #{record.status,jdbcType=char},
+      </if>
+	  <if test="record.thirdTransStatus != null" >
+       #{record.thirdTransStatus,jdbcType=varchar},
+      </if>
+	  <if test="record.returnCode != null" >
+       #{record.returnCode,jdbcType=varchar},
+      </if>
+	  <if test="record.returnMsg != null" >
+       #{record.returnMsg,jdbcType=varchar},
+      </if>
+	  <if test="record.balStatus != null" >
+       #{record.balStatus,jdbcType=char},
+      </if>
+	  <if test="record.balResult != null" >
+       #{record.balResult,jdbcType=char},
+      </if>
+	  <if test="record.taskId != null" >
+       #{record.taskId,jdbcType=char},
+      </if>
+	  <if test="record.custName != null" >
+       #{record.custName,jdbcType=varchar},
+      </if>
+	  <if test="record.idType != null" >
+       #{record.idType,jdbcType=char},
+      </if>
+	  <if test="record.idNo != null" >
+       #{record.idNo,jdbcType=varchar},
+      </if>
+	  <if test="record.mobileNo != null" >
+       #{record.mobileNo,jdbcType=varchar},
+      </if>
+	  <if test="record.realtimeThirdPartyCode != null" >
+       #{record.realtimeThirdPartyCode,jdbcType=char},
+      </if>
+	  <if test="record.openBankName != null" >
+       #{record.openBankName,jdbcType=varchar},
+      </if>
+	  <if test="record.bankCode != null" >
+       #{record.bankCode,jdbcType=varchar},
+      </if>
+	  <if test="record.openBankProv != null" >
+       #{record.openBankProv,jdbcType=varchar},
+      </if>
+	  <if test="record.bizType != null" >
+       #{record.bizType,jdbcType=char},
+      </if>
+	  <if test="record.bizObjType != null" >
+       #{record.bizObjType,jdbcType=char},
+      </if>
+	  <if test="record.token != null" >
+       #{record.token,jdbcType=varchar},
+      </if>
+	  <if test="record.bussTransDate != null" >
+       #{record.bussTransDate,jdbcType=int},
+      </if>
+	  <if test="record.bussTransSeqno != null" >
+       #{record.bussTransSeqno,jdbcType=char},
+      </if>
+	  <if test="record.batDetailId != null" >
+       #{record.batDetailId,jdbcType=char},
+      </if>
+	  <if test="record.batId != null" >
+       #{record.batId,jdbcType=char},
+      </if>
+	  <if test="record.notifyCtsFlag != null" >
+       #{record.notifyCtsFlag,jdbcType=char},
+      </if>
+	  <if test="record.queryCount != null" >
+       #{record.queryCount,jdbcType=int},
+      </if>
+	  <if test="record.version != null" >
+       #{record.version,jdbcType=int},
+      </if>
+	  <if test="record.createDatetime != null" >
+       #{record.createDatetime,jdbcType=timestamp},
+      </if>
+	  <if test="record.updateDatetime != null" >
+       #{record.updateDatetime,jdbcType=timestamp},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCriteria" parameterType="map" >
+    update trx_realtime_trans_info
+    set 
+       TRANS_SEQNO = #{transSeqno,jdbcType=char},
+       ORG_TRANS_SEQNO = #{orgTransSeqno,jdbcType=varchar},
+       CUST_NO = #{custNo,jdbcType=char},
+       BANK_CARD_NO = #{bankCardNo,jdbcType=varchar},
+       BANK_CARD_TYPE = #{bankCardType,jdbcType=char},
+       CURRENCY = #{currency,jdbcType=char},
+       TRANS_AMT = #{transAmt,jdbcType=decimal},
+       TRANS_TYPE = #{transType,jdbcType=char},
+       TRANS_FROM = #{transFrom,jdbcType=char},
+       TRANS_DESC = #{transDesc,jdbcType=varchar},
+       REMARK = #{remark,jdbcType=varchar},
+       VALID_CODE = #{validCode,jdbcType=varchar},
+       STORABLE_PAN = #{storablePan,jdbcType=varchar},
+       TRANS_DATE = #{transDate,jdbcType=int},
+       TRANS_TIME = #{transTime,jdbcType=char},
+       SETTLE_DATE = #{settleDate,jdbcType=int},
+       STATUS = #{status,jdbcType=char},
+       THIRD_TRANS_STATUS = #{thirdTransStatus,jdbcType=varchar},
+       RETURN_CODE = #{returnCode,jdbcType=varchar},
+       RETURN_MSG = #{returnMsg,jdbcType=varchar},
+       BAL_STATUS = #{balStatus,jdbcType=char},
+       BAL_RESULT = #{balResult,jdbcType=char},
+       TASK_ID = #{taskId,jdbcType=char},
+       CUST_NAME = #{custName,jdbcType=varchar},
+       ID_TYPE = #{idType,jdbcType=char},
+       ID_NO = #{idNo,jdbcType=varchar},
+       MOBILE_NO = #{mobileNo,jdbcType=varchar},
+       REALTIME_THIRD_PARTY_CODE = #{realtimeThirdPartyCode,jdbcType=char},
+       OPEN_BANK_NAME = #{openBankName,jdbcType=varchar},
+       BANK_CODE = #{bankCode,jdbcType=varchar},
+       OPEN_BANK_PROV = #{openBankProv,jdbcType=varchar},
+       BIZ_TYPE = #{bizType,jdbcType=char},
+       BIZ_OBJ_TYPE = #{bizObjType,jdbcType=char},
+       TOKEN = #{token,jdbcType=varchar},
+       BUSS_TRANS_DATE = #{bussTransDate,jdbcType=int},
+       BUSS_TRANS_SEQNO = #{bussTransSeqno,jdbcType=char},
+       BAT_DETAIL_ID = #{batDetailId,jdbcType=char},
+       BAT_ID = #{batId,jdbcType=char},
+       NOTIFY_CTS_FLAG = #{notifyCtsFlag,jdbcType=char},
+       QUERY_COUNT = #{queryCount,jdbcType=int},
+       VERSION = #{version,jdbcType=int},
+       CREATE_DATETIME = #{createDatetime,jdbcType=timestamp},
+       UPDATE_DATETIME = #{updateDatetime,jdbcType=timestamp},
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smy.pcs.domain.TrxRealtimeTransInfo" >
+    update trx_realtime_trans_info
+    <set >
+	  <if test="transSeqno != null" >
+       TRANS_SEQNO = #{transSeqno,jdbcType=char},
+      </if>
+	  <if test="orgTransSeqno != null" >
+       ORG_TRANS_SEQNO = #{orgTransSeqno,jdbcType=varchar},
+      </if>
+	  <if test="custNo != null" >
+       CUST_NO = #{custNo,jdbcType=char},
+      </if>
+	  <if test="bankCardNo != null" >
+       BANK_CARD_NO = #{bankCardNo,jdbcType=varchar},
+      </if>
+	  <if test="bankCardType != null" >
+       BANK_CARD_TYPE = #{bankCardType,jdbcType=char},
+      </if>
+	  <if test="currency != null" >
+       CURRENCY = #{currency,jdbcType=char},
+      </if>
+	  <if test="transAmt != null" >
+       TRANS_AMT = #{transAmt,jdbcType=decimal},
+      </if>
+	  <if test="transType != null" >
+       TRANS_TYPE = #{transType,jdbcType=char},
+      </if>
+	  <if test="transFrom != null" >
+       TRANS_FROM = #{transFrom,jdbcType=char},
+      </if>
+	  <if test="transDesc != null" >
+       TRANS_DESC = #{transDesc,jdbcType=varchar},
+      </if>
+	  <if test="remark != null" >
+       REMARK = #{remark,jdbcType=varchar},
+      </if>
+	  <if test="validCode != null" >
+       VALID_CODE = #{validCode,jdbcType=varchar},
+      </if>
+	  <if test="storablePan != null" >
+       STORABLE_PAN = #{storablePan,jdbcType=varchar},
+      </if>
+	  <if test="transDate != null" >
+       TRANS_DATE = #{transDate,jdbcType=int},
+      </if>
+	  <if test="transTime != null" >
+       TRANS_TIME = #{transTime,jdbcType=char},
+      </if>
+	  <if test="settleDate != null" >
+       SETTLE_DATE = #{settleDate,jdbcType=int},
+      </if>
+	  <if test="status != null" >
+       STATUS = #{status,jdbcType=char},
+      </if>
+	  <if test="thirdTransStatus != null" >
+       THIRD_TRANS_STATUS = #{thirdTransStatus,jdbcType=varchar},
+      </if>
+	  <if test="returnCode != null" >
+       RETURN_CODE = #{returnCode,jdbcType=varchar},
+      </if>
+	  <if test="returnMsg != null" >
+       RETURN_MSG = #{returnMsg,jdbcType=varchar},
+      </if>
+	  <if test="balStatus != null" >
+       BAL_STATUS = #{balStatus,jdbcType=char},
+      </if>
+	  <if test="balResult != null" >
+       BAL_RESULT = #{balResult,jdbcType=char},
+      </if>
+	  <if test="taskId != null" >
+       TASK_ID = #{taskId,jdbcType=char},
+      </if>
+	  <if test="custName != null" >
+       CUST_NAME = #{custName,jdbcType=varchar},
+      </if>
+	  <if test="idType != null" >
+       ID_TYPE = #{idType,jdbcType=char},
+      </if>
+	  <if test="idNo != null" >
+       ID_NO = #{idNo,jdbcType=varchar},
+      </if>
+	  <if test="mobileNo != null" >
+       MOBILE_NO = #{mobileNo,jdbcType=varchar},
+      </if>
+	  <if test="realtimeThirdPartyCode != null" >
+       REALTIME_THIRD_PARTY_CODE = #{realtimeThirdPartyCode,jdbcType=char},
+      </if>
+	  <if test="openBankName != null" >
+       OPEN_BANK_NAME = #{openBankName,jdbcType=varchar},
+      </if>
+	  <if test="bankCode != null" >
+       BANK_CODE = #{bankCode,jdbcType=varchar},
+      </if>
+	  <if test="openBankProv != null" >
+       OPEN_BANK_PROV = #{openBankProv,jdbcType=varchar},
+      </if>
+	  <if test="bizType != null" >
+       BIZ_TYPE = #{bizType,jdbcType=char},
+      </if>
+	  <if test="bizObjType != null" >
+       BIZ_OBJ_TYPE = #{bizObjType,jdbcType=char},
+      </if>
+	  <if test="token != null" >
+       TOKEN = #{token,jdbcType=varchar},
+      </if>
+	  <if test="bussTransDate != null" >
+       BUSS_TRANS_DATE = #{bussTransDate,jdbcType=int},
+      </if>
+	  <if test="bussTransSeqno != null" >
+       BUSS_TRANS_SEQNO = #{bussTransSeqno,jdbcType=char},
+      </if>
+	  <if test="batDetailId != null" >
+       BAT_DETAIL_ID = #{batDetailId,jdbcType=char},
+      </if>
+	  <if test="batId != null" >
+       BAT_ID = #{batId,jdbcType=char},
+      </if>
+	  <if test="notifyCtsFlag != null" >
+       NOTIFY_CTS_FLAG = #{notifyCtsFlag,jdbcType=char},
+      </if>
+	  <if test="queryCount != null" >
+       QUERY_COUNT = #{queryCount,jdbcType=int},
+      </if>
+	  <if test="version != null" >
+       VERSION = #{version,jdbcType=int},
+      </if>
+	  <if test="createDatetime != null" >
+       CREATE_DATETIME = #{createDatetime,jdbcType=timestamp},
+      </if>
+	  <if test="updateDatetime != null" >
+       UPDATE_DATETIME = #{updateDatetime,jdbcType=timestamp},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smy.pcs.domain.TrxRealtimeTransInfo" >
+    update trx_realtime_trans_info
+    set 
+       TRANS_SEQNO = #{transSeqno,jdbcType=char},
+       ORG_TRANS_SEQNO = #{orgTransSeqno,jdbcType=varchar},
+       CUST_NO = #{custNo,jdbcType=char},
+       BANK_CARD_NO = #{bankCardNo,jdbcType=varchar},
+       BANK_CARD_TYPE = #{bankCardType,jdbcType=char},
+       CURRENCY = #{currency,jdbcType=char},
+       TRANS_AMT = #{transAmt,jdbcType=decimal},
+       TRANS_TYPE = #{transType,jdbcType=char},
+       TRANS_FROM = #{transFrom,jdbcType=char},
+       TRANS_DESC = #{transDesc,jdbcType=varchar},
+       REMARK = #{remark,jdbcType=varchar},
+       VALID_CODE = #{validCode,jdbcType=varchar},
+       STORABLE_PAN = #{storablePan,jdbcType=varchar},
+       TRANS_DATE = #{transDate,jdbcType=int},
+       TRANS_TIME = #{transTime,jdbcType=char},
+       SETTLE_DATE = #{settleDate,jdbcType=int},
+       STATUS = #{status,jdbcType=char},
+       THIRD_TRANS_STATUS = #{thirdTransStatus,jdbcType=varchar},
+       RETURN_CODE = #{returnCode,jdbcType=varchar},
+       RETURN_MSG = #{returnMsg,jdbcType=varchar},
+       BAL_STATUS = #{balStatus,jdbcType=char},
+       BAL_RESULT = #{balResult,jdbcType=char},
+       TASK_ID = #{taskId,jdbcType=char},
+       CUST_NAME = #{custName,jdbcType=varchar},
+       ID_TYPE = #{idType,jdbcType=char},
+       ID_NO = #{idNo,jdbcType=varchar},
+       MOBILE_NO = #{mobileNo,jdbcType=varchar},
+       REALTIME_THIRD_PARTY_CODE = #{realtimeThirdPartyCode,jdbcType=char},
+       OPEN_BANK_NAME = #{openBankName,jdbcType=varchar},
+       BANK_CODE = #{bankCode,jdbcType=varchar},
+       OPEN_BANK_PROV = #{openBankProv,jdbcType=varchar},
+       BIZ_TYPE = #{bizType,jdbcType=char},
+       BIZ_OBJ_TYPE = #{bizObjType,jdbcType=char},
+       TOKEN = #{token,jdbcType=varchar},
+       BUSS_TRANS_DATE = #{bussTransDate,jdbcType=int},
+       BUSS_TRANS_SEQNO = #{bussTransSeqno,jdbcType=char},
+       BAT_DETAIL_ID = #{batDetailId,jdbcType=char},
+       BAT_ID = #{batId,jdbcType=char},
+       NOTIFY_CTS_FLAG = #{notifyCtsFlag,jdbcType=char},
+       QUERY_COUNT = #{queryCount,jdbcType=int},
+       VERSION = #{version,jdbcType=int},
+       CREATE_DATETIME = #{createDatetime,jdbcType=timestamp},
+       UPDATE_DATETIME = #{updateDatetime,jdbcType=timestamp},
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+</mapper>

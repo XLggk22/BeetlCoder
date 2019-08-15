@@ -1,0 +1,13 @@
+package ${basePackage}.dao;
+
+import ${basePackage}.domain.${className};
+import ${basePackage}.domain.${className}Criteria;
+import com.smy.framework.core.support.BaseDao;
+
+/**
+ * ${colunmList[0].tableDesc} dao
+ * @author zhangguoguang
+ *
+ */
+public interface ${className}Dao extends BaseDao<${className}, ${className}Criteria, String> {
+}

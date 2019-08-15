@@ -1,0 +1,219 @@
+package ${package};
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.stereotype.Service;
+
+import ${basePackage}.dao.${className}Dao;
+import ${basePackage}.domain.${className};
+import ${basePackage}.domain.${className}Criteria;
+import ${basePackage}.domain.${className}Criteria.Criteria;
+import ${basePackage}.enums.TableIdCode;
+import ${basePackage}.service.${className}Service;
+import com.smy.framework.core.exception.CommonErrorCode;
+import com.smy.framework.core.exception.ServiceException;
+import com.smy.framework.core.util.SequenceUtil;
+import org.springframework.util.StringUtils;
+import com.smy.framework.base.IPage;
+import com.smy.framework.core.page.PageHelper;
+
+/**
+ * ${colunmList[0].tableDesc} ServiceImpl
+ * @author zhangguoguang
+ *
+ */
+@Service
+public class ${custFileName} implements ${className}Service {
+	@Resource
+	private ${className}Dao ${classNameLowerCase}Dao;
+
+	@Override
+	public String create(${className} ${classNameLowerCase}) {
+		if(StringUtils.isEmpty(${classNameLowerCase}.getId())){
+			String id = SequenceUtil.getId(TableIdCode.ID_${tableName});
+			${classNameLowerCase}.setId(id);
+		}	
+		${classNameLowerCase}.setCreateDatetime(new Date());
+		try {
+			${classNameLowerCase}Dao.insertSelective(${classNameLowerCase});
+		} catch (Exception e) {
+			throw new ServiceException(CommonErrorCode.ERROR_TABLE_INSERT, e, new String[] { "${colunmList[0].tableDesc}" });
+		}
+		return id;
+	}
+
+	@Override
+	public void updateById(${className} ${classNameLowerCase}) {
+		if(StringUtils.isEmpty(${classNameLowerCase}.getId())){
+			throw new ServiceException(CommonErrorCode.NULL_PROPERTIES, new String[] { "ID" });
+		}
+		${classNameLowerCase}.setUpdateDatetime(new Date());
+		try {
+			${classNameLowerCase}Dao.updateByPrimaryKeySelective( ${classNameLowerCase});
+		} catch (Exception e) {
+			throw new ServiceException(CommonErrorCode.ERROR_TABLE_UPDATE, e, new String[] { "${className}" }, "更新失败, ID：" + ${classNameLowerCase}.getId());
+		}
+	}
+
+	@Override
+	public void deleteById(String id) {
+		if(StringUtils.isEmpty(id)){
+			throw new ServiceException(CommonErrorCode.NULL_PROPERTIES, new String[] { "ID" });
+		}
+		try {
+			${classNameLowerCase}Dao.deleteByPrimaryKey(id);
+		} catch (Exception e) {
+			throw new ServiceException(CommonErrorCode.ERROR_TABLE_UPDATE, e, new String[] { "${className}" }, "删除失败, ID：" + id);
+		}
+	}
+
+	@Override
+	public IPage<${className}> findPageList(${className} ${classNameLowerCase}, int pageNo, int pageSize) {
+	
+		if (null ==  ${classNameLowerCase}) {
+			throw new ServiceException(CommonErrorCode.NULL_PROPERTIES, new String[] { "请求对象" });
+		}
+		
+		${className}Criteria criteria = this.createCriteria(${classNameLowerCase});
+		int count = ${classNameLowerCase}Dao.countByCriteria(criteria);
+		PageHelper<${className}> helper = new PageHelper<${className}>(pageNo,pageSize,count);
+		criteria.setLimitStart(helper.getCurrentPageFirstElementNo());
+		criteria.setPageSize(pageSize);
+		criteria.setOrderByClause("");
+		List<${className}> list = null;
+		
+		try {
+			list = ${classNameLowerCase}Dao.selectByCriteria(criteria);
+		} catch (Exception e) {
+			throw new ServiceException(CommonErrorCode.ERROR_TABLE_QUERY, e, new String[] { "${className}"  }, "查询${className} List 失败 ");
+		}
+		
+		return helper.buildPageEntity(list);
+	}
+
+	@Override
+	public Integer findTotalNum(${className} ${classNameLowerCase}) {
+		if (null == ${classNameLowerCase}) {
+			throw new ServiceException(CommonErrorCode.NULL_PROPERTIES, new String[] { "请求对象" });
+		}
+		try {
+			${className}Criteria criteria = this.createCriteria(${classNameLowerCase});
+			return ${classNameLowerCase}Dao.countByCriteria(criteria);
+		} catch (Exception e) {
+			throw new ServiceException(CommonErrorCode.ERROR_TABLE_QUERY, e, new String[] { "${className}" }, "findTotalNum失败 ");
+		}
+	}
+
+	@Override
+	public ${className} findById(String id) {
+		if(StringUtils.isEmpty(id)){
+			throw new ServiceException(CommonErrorCode.NULL_PROPERTIES, new String[] { "ID" });
+		}
+		try {
+			return ${classNameLowerCase}Dao.selectByPrimaryKey(id);
+		} catch (Exception e) {
+			throw new ServiceException(CommonErrorCode.ERROR_TABLE_QUERY, e, new String[] { "${className}"  }, "findById失败,ID：" + id );
+		}
+		
+	}
+
+	@Override
+	public List<${className}> findListByMap(Map<String, Object> paramMap) {
+		if (null == paramMap || paramMap.isEmpty()) {
+			throw new ServiceException(CommonErrorCode.NULL_PROPERTIES, new String[] { "请求对象" });
+		}
+		
+		${className}Criteria criteria = this.createCriteria(paramMap);
+		
+		try {
+			return	${classNameLowerCase}Dao.selectByCriteria(criteria);
+		} catch (Exception e) {
+			throw new ServiceException(CommonErrorCode.ERROR_TABLE_QUERY, e, new String[] { "${className}"  }, "findListByMap查询失败 ");
+		}
+	}
+
+	@Override
+	public List<${className}> findListByExample(${className} ${classNameLowerCase}) {
+		if (null ==  ${classNameLowerCase}) {
+			throw new ServiceException(CommonErrorCode.NULL_PROPERTIES, new String[] { "请求对象" });
+		}
+		
+		${className}Criteria criteria = this.createCriteria(${classNameLowerCase});
+		
+		try {
+			return	${classNameLowerCase}Dao.selectByCriteria(criteria);
+		} catch (Exception e) {
+			throw new ServiceException(CommonErrorCode.ERROR_TABLE_QUERY, e, new String[] { "${className}"  }, "findListByExample查询失败 ");
+		}
+	}
+
+	@Override
+	public ${className} findOneByMap(Map<String, Object> param) {
+		if (null == param || param.isEmpty()) {
+			throw new ServiceException(CommonErrorCode.NULL_PROPERTIES, new String[] { "请求对象" });
+		}
+		${className}Criteria criteria = this.createCriteria(param);
+		try {	
+			List<${className}> ${classNameLowerCase}List = ${classNameLowerCase}Dao.selectByCriteria(criteria);
+			if (CollectionUtils.isNotEmpty(${classNameLowerCase}List)) {
+				${classNameLowerCase}List.get(0);
+			}
+		} catch (Exception e) {
+			throw new ServiceException(CommonErrorCode.ERROR_TABLE_QUERY, e, new String[] { "${className}"  }, "findOneByMap查询失败 ");
+		}
+
+		return null;
+	}
+
+	@Override
+	public ${className} findOneByExample(${className} ${classNameLowerCase}) {
+		if (null ==  ${classNameLowerCase}) {
+			throw new ServiceException(CommonErrorCode.NULL_PROPERTIES, new String[] { "请求对象" });
+		}
+		try {	
+			${className}Criteria criteria = this.createCriteria(${classNameLowerCase});
+			List<${className}> ${classNameLowerCase}List = ${classNameLowerCase}Dao.selectByCriteria(criteria);
+			if (CollectionUtils.isNotEmpty(${classNameLowerCase}List)) {
+				return ${classNameLowerCase}List.get(0);
+			}
+		} catch (Exception e) {
+			throw new ServiceException(CommonErrorCode.ERROR_TABLE_QUERY, e, new String[] { "${className}"  }, "findOneByExample查询失败 ");
+		}
+		
+		return null;
+	}
+
+
+	private ${className}Criteria createCriteria(${className} ${classNameLowerCase}) {
+		${className}Criteria criteria = new ${className}Criteria();
+		Criteria c = criteria.createCriteria();
+		if (${classNameLowerCase} != null) {
+			<% for(colunm in colunmList){ %>
+			if(!StringUtils.isEmpty(${classNameLowerCase}.get${colunm.columnNameCamelFirstUpper}())){
+				c.and${colunm.columnNameCamelFirstUpper}EqualTo(${classNameLowerCase}.get${colunm.columnNameCamelFirstUpper}());
+			}
+			<% } %>
+		}
+		return criteria;
+	}
+
+
+	private ${className}Criteria createCriteria(Map<String, Object> paramMap) {
+		${className}Criteria criteria = new ${className}Criteria();
+		Criteria c = criteria.createCriteria();
+		if (paramMap != null) {
+			if (!StringUtils.isEmpty(paramMap.get("id"))) {
+				c.andIdEqualTo((String) paramMap.get("id"));
+			}
+			if (!StringUtils.isEmpty(paramMap.get("order"))) {
+				criteria.setOrderByClause((String) paramMap.get("order"));
+			}
+		}
+		return criteria;
+	}
+}

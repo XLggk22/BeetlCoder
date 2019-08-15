@@ -1,0 +1,179 @@
+\<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+\<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+\<%
+String path = request.getContextPath();
+String basePath = path+"/";
+HttpSession httpSession = request.getSession();
+String userId = (String)httpSession.getAttribute("userId");
+%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <base href="\<%=basePath%>">
+
+    <title>萨摩耶运营管理平台</title>
+    <link rel="stylesheet" type="text/css" href="\<%=basePath %>static/jquery-easyui-1.4.3/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="\<%=basePath %>static/jquery-easyui-1.4.3/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="\<%=basePath %>static/css/base.css">
+	<link rel="stylesheet" type="text/css" href="\<%=basePath %>static/css/button.css">
+	<script type="text/javascript" src="\<%=basePath %>static/jquery-easyui-1.4.3/jquery.min.js"></script>
+	<script type="text/javascript" src="\<%=basePath %>static/jquery-easyui-1.4.3/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="\<%=basePath %>static/jquery-easyui-1.4.3/locale/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="\<%=basePath %>static/jquery-easyui-1.4.3/datagrid-bufferview.js"></script>
+
+	<style>
+		td{
+			padding:10px 10px;
+		}
+	</style>
+
+    <style>
+    .input{
+    	width:155px;
+    }
+    .title{
+    	text-align: right;
+    }
+    </style>
+  </head>
+
+  <body>
+	<div id = "conditionPanel" title="查询条件" class="easyui-panel" style="width:100%;" data-options="collapsible:true">
+	<div style="width:1300px">
+
+		<form id="queryParameters">
+	  	<table style="line-height: 40px;margin: 20px;" >
+	  		<tr style="">
+	  			<td class="title">select条件:</td>
+	  			<td class="input">
+	  				<select id="field1_Qry" class="easyui-combobox" name="" style="width:150px;">
+	  					<option value="">全部</option>
+	  				</select>
+	  			</td>
+	  			<td class="title">input条件:</td>
+	  			<td class="input">
+					<input id="field2_Qry" class="easyui-textbox" style="width:150px;"></input>
+	  			</td>
+	  			<td><input type="button"  style="margin-left: 40px;" class="btn-search" onclick="searchForm()" value="查询"/></td>
+	  		</tr>
+	  	</table>
+  	</form>
+	</div>
+	</div>
+	<div style="margin:10px 0px">
+	 	<div id = "gridPanel" title="列表" class="easyui-panel" style="padding:5px;width:100%;" >
+	 	<div id="toolbar">
+			<a href="javascript:void(0);" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="add()">添加</a>
+		</div>
+	  	<table id="dataList" style="width:100%;" ></table>
+	  	</div>
+	</div>
+
+    <div id="addDlg" class="easyui-dialog" title="${colunmList[0].tableDesc}" data-options="modal:true,closed:true" style="width:850px;height:200px;padding:10px;top:20%">
+  	</div>
+  	<div id="editDlg" class="easyui-dialog" title="${colunmList[0].tableDesc}" data-options="modal:true,closed:true" style="width:800px;height:180px;padding:10px;top:20%">
+  	</div>
+  </body>
+    <script type="text/javascript">
+
+
+	$(function(){
+		//首次查询
+		searchForm();
+
+		//渲染列表
+		$('#dataList').datagrid({
+			url:'\<%=basePath %>${classNameLowerCase}/queryList',
+		    columns:[[
+				<% for(colunm in colunmList){ %>
+				{field:'${colunm.columnNameCamel}',title:'${colunm.columnDesc}',width:100,align:'center',
+					formatter: function(value,row){
+						return value;
+					}
+				},
+				<% } %>
+		        {field:'operation',title:'操作',width:500,align:'left',
+					formatter:function(value,rec){
+						var query =""
+
+						query = '<a href="javascript:void(0)" style="color:blue;margin-left:10px"  onclick="edit(\''+rec.id+'\');">修改</a>';
+
+						query += '<a href="javascript:void(0)" style="color:blue;margin-left:10px"  onclick="deleteAc(\''+rec.id+'\');">删除</a>';
+
+						return query;
+					}
+				}
+		    ]],
+	        striped:true,//设置为true将交替显示行背景
+	        singleSelect:true,//设置为true将只允许选择一行
+	        checkOnSelect:false,//如果设置为 true，当用户点击一行的时候 checkbox checked(选择)/unchecked(取消选择)。 如果为false，当用户点击刚好在checkbox的时候，checkbox checked(选择)/unchecked(取消选择)
+		    selectOnCheck:true,
+	        rownumbers:true, //设置为true将显示行数
+		    pagination:true, //设置true将在数据表格底部显示分页工具栏
+		    pageNumber:1,//当设置分页属性时，初始化分页码
+		    pageSize:20,//当设置分页属性时，初始化每页记录数
+		    pageList:[20,40] //当设置分页属性时，初始化每页记录数列表
+		});
+
+	});
+
+	//查询列表
+	function searchForm(){
+		$('#dataList').datagrid({
+		   url:'\<%=basePath %>${classNameLowerCase}/queryList',
+	       loadMsg : "正在加载，请稍等...",
+		   queryParams:  {
+		   		  <% for(colunm in colunmList){ %>
+			      "${colunm.columnNameCamel}" : $("#${colunm.columnNameCamel}_Qry").combobox('getValue'),
+		   		  <% } %>
+			   }
+		});
+
+	}
+
+	//新增
+	function add(){
+		var addr = "\<%=basePath %>${classNameLowerCase}/add";
+		 $('#addDlg').dialog({
+			closed: false,
+  	    	cache: false,
+  	    	height: 260,
+  	    	href: addr
+  		});
+	}
+	
+	//修改
+	function edit(id){
+		var addr = "\<%=basePath %>${classNameLowerCase}/edit?id="+id;
+		 $('#editDlg').dialog({
+			closed: false,
+   	    	cache: false,
+   	    	height:260,
+   	    	href: addr
+   		});
+	}
+
+	//删除
+	function deleteAc(id){
+		$.messager.confirm("提示","确定删除配置信息",function (data) {
+            if (data) {
+            	$.ajax({
+    				url:'\<%=basePath %>${classNameLowerCase}/deleteAc?id='+id,
+    				type:"GET",
+    				dataType:"json",
+    				success:function(data){
+    					if (data!=null&&data.code=="200"){
+    						$.messager.alert("返回信息","删除配置成功");
+    						$("#dataList").datagrid("reload");
+    					}else{
+    						$.messager.alert('返回信息',data.message);
+    					}
+    				}
+    			});
+            }
+
+		});
+	}
+	</script>
+</html>

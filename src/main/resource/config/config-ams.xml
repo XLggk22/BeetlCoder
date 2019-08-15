@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configInfo>
+   <ip>192.168.2.234</ip>
+   <port>3306</port>
+   <database>ams</database>
+   <userName>dm_ams</userName>
+   <passWord>ams@sit</passWord>
+   <basePackage>com.smy.ams</basePackage>
+   <tableConfigs>
+       <tableConfig>
+         <tableName>AMS_APPLY_LIMIT_DATA</tableName>
+         <builderObjectName>AmsApplyLimitData</builderObjectName>
+         <passColumnNames>null</passColumnNames>
+         <tablePK>ID</tablePK>
+      </tableConfig>
+      
+   </tableConfigs>
+   <fileConfigs>
+      <fileConfig>
+         <buildPackage>com.smy.ams.inner</buildPackage>
+         <buildTemplatePosition>config/innerService.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>Inner${className}Service</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>com.smy.ams.inner.impl</buildPackage>
+         <buildTemplatePosition>config/innerServiceImpl.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>Inner${className}ServiceImpl</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>com.smy.ams.dao</buildPackage>
+         <buildTemplatePosition>config/dao.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>Dao</buildFileName>
+      </fileConfig>
+   </fileConfigs>
+</configInfo>
+

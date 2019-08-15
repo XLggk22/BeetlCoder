@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configInfo>
+   <ip>192.168.2.234</ip>
+   <port>3306</port>
+   <database>ams</database>
+   <userName>dm_ams</userName>
+   <passWord>ams@sit</passWord>
+   <basePackage>com.smy.ics</basePackage>
+   <tableConfigs>
+      <tableConfig>
+         <tableName>ICS_PARAM</tableName>
+         <builderObjectName>IcsParam</builderObjectName>
+         <passColumnNames>null</passColumnNames>
+         <tablePK>ID</tablePK>
+      </tableConfig>
+   </tableConfigs>
+   <fileConfigs>
+      <fileConfig>
+         <buildPackage>com.smy.ics.inner</buildPackage>
+         <buildTemplatePosition>config/innerService.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>Inner${className}Service</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>com.smy.ics.inner.impl</buildPackage>
+         <buildTemplatePosition>config/innerServiceImpl.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>Inner${className}ServiceImpl</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>com.smy.ics.dao</buildPackage>
+         <buildTemplatePosition>config/dao.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>Dao</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>mapper</buildPackage>
+         <buildTemplatePosition>config/mapper.template</buildTemplatePosition>
+         <buildSuffixName>.xml</buildSuffixName>
+         <buildFileName>Mapper</buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>com.smy.ics.domain</buildPackage>
+         <buildTemplatePosition>config/domain.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName></buildFileName>
+      </fileConfig>
+      <fileConfig>
+         <buildPackage>com.smy.ics.domain</buildPackage>
+         <buildTemplatePosition>config/criteria.template</buildTemplatePosition>
+         <buildSuffixName>.java</buildSuffixName>
+         <buildFileName>Criteria</buildFileName>
+      </fileConfig>
+   </fileConfigs>
+</configInfo>
+
